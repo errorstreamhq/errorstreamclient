@@ -9,7 +9,7 @@ class ErrorStreamClient {
     public $api_token;
     public $project_token;
 
-    public function reportException($ex)
+    public function reportException(\Exception $ex)
     {
         $report = new ErrorStreamReport();
         $report->error_group = $ex->getMessage().':'.$ex->getLine();
@@ -18,6 +18,11 @@ class ErrorStreamClient {
         $report->message = $ex->getMessage();
         $report->stack_trace = $ex->getTraceAsString();
         $report->severity = 3;
+        return $this->report($report);
+    }
+
+    public function report(ErrorStreamReport $report)
+    {
         return $this->makeRequest($report);
     }
 
