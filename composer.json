@@ -1,6 +1,8 @@
 {
     "name": "errorstream/errorstreamclient",
     "description": "PHP Client for ErrorStream.com",
+    "keywords": ["log", "logging", "errors", "errorstream"],
+    "homepage": "https://www.errorstream.com",
     "type": "library",
     "require": {
         "guzzlehttp/guzzle": "6.2.*"
