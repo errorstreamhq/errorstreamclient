@@ -29,7 +29,7 @@ class ErrorStreamClient {
     protected function makeRequest($data)
     {
         $guzzle = new Client();
-        $url = 'http://errorstream.com/api/1.0/errors/create?'.http_build_query(['api_token' => $this->api_token, 'project_token' => $this->project_token]);
+        $url = 'https://www.errorstream.com/api/1.0/errors/create?'.http_build_query(['api_token' => $this->api_token, 'project_token' => $this->project_token]);
 
         try {
 
