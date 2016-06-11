@@ -4,11 +4,45 @@ namespace ErrorStream\ErrorStreamClient;
 use ErrorStream\ErrorStreamClient\ErrorStreamReport;
 use GuzzleHttp\Client;
 
+/**
+ * ErrorStreamClient allows multiple different interfaces to send data to ErrorStream.com using
+ * eithter exceptions or the ErrorStreamReport class.
+ * Class ErrorStreamClient
+ * @package ErrorStream\ErrorStreamClient
+ */
 class ErrorStreamClient {
 
     public $api_token;
     public $project_token;
+    private $tags = [];
+    private $context = [];
 
+    /**
+     * Tag this software. Good things to tag might be releases, servers, etc.
+     * This will be appended to any reports that arise.
+     * @param $tag
+     */
+    public function addTag($tag)
+    {
+        $this->tags[] = $tag;
+    }
+
+    /**
+     * Add context to your application stack trace. Pass a string to represent
+     * more details in your stack traces within the website. This will be appended
+     * to any reports that arise.
+     * @param $context
+     */
+    public function addContext($context)
+    {
+        $this->context[] = $context;
+    }
+
+    /**
+     * Report an exception to the errorstream website.
+     * @param \Exception $ex
+     * @return string
+     */
     public function reportException(\Exception $ex)
     {
         $report = new ErrorStreamReport();
@@ -21,11 +55,24 @@ class ErrorStreamClient {
         return $this->report($report);
     }
 
+    /**
+     * Make a request sending the errorstream report.
+     * @param \ErrorStream\ErrorStreamClient\ErrorStreamReport $report
+     * @return string
+     */
     public function report(ErrorStreamReport $report)
     {
+        $report->tags = $this->tags;
+        $report->context = $this->context;
         return $this->makeRequest($report);
     }
 
+
+    /**
+     * Simple request interface using guzzle to send JSON data to errorstream
+     * @param $data
+     * @return string
+     */
     protected function makeRequest($data)
     {
         $guzzle = new Client();
