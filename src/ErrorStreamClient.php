@@ -75,16 +75,21 @@ class ErrorStreamClient {
      */
     protected function makeRequest($data)
     {
-        $guzzle = new Client();
         $url = 'https://www.errorstream.com/api/1.0/errors/create?'.http_build_query(['api_token' => $this->api_token, 'project_token' => $this->project_token]);
 
         try {
+            $ch = curl_init();
 
-            $r = $guzzle->request('POST', $url, [
-                'json' => $data,
-            ]);
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            
+            $result = curl_exec($ch);
+            curl_close($ch);
 
-            return $r->getBody();
+            return $result;
 
         } catch (\Exception $ex){
             return $ex->getMessage();

@@ -5,7 +5,10 @@
     "homepage": "https://www.errorstream.com",
     "type": "library",
     "require": {
-        "guzzlehttp/guzzle": "6.2.*"
+        "php": ">=5.3.0"
+    },
+    "require-dev": {
+        "ext-curl": "*"
     },
     "license": "Apache-2.0",
     "minimum-stability": "dev",
