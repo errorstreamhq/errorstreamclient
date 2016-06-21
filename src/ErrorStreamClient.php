@@ -2,7 +2,6 @@
 namespace ErrorStream\ErrorStreamClient;
 
 use ErrorStream\ErrorStreamClient\ErrorStreamReport;
-use GuzzleHttp\Client;
 
 /**
  * ErrorStreamClient allows multiple different interfaces to send data to ErrorStream.com using
